@@ -1,6 +1,6 @@
 {
   "name": "alignai",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Server-side Align AI SDK for Node.js",
   "keywords": [
     "align-ai",
