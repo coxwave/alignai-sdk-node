@@ -7,7 +7,7 @@ export interface Event {
     toPB(): PBEvent;
 }
 
-interface OpenSessionEventProps {
+export interface OpenSessionEventProps {
     sessionId: string;
     userId: string;
     assistantId?: string;
@@ -41,7 +41,7 @@ export class OpenSessionEvent implements Event {
     }
 }
 
-interface CreateMessageEventProps {
+export interface CreateMessageEventProps {
     sessionId: string;
     messageIndex: number;
     messageRole: 'user' | 'assistant';
@@ -74,7 +74,7 @@ export class CreateMessageEvent implements Event {
     }
 }
 
-interface CloseSessionEventProps {
+export interface CloseSessionEventProps {
     sessionId: string;
 }
 
@@ -101,7 +101,7 @@ export class CloseSessionEvent implements Event {
     }
 }
 
-interface IdentifyUserEventProps {
+export interface IdentifyUserEventProps {
     userId: string;
     userDisplayName?: string;
     userEmail?: string;
