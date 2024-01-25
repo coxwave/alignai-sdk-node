@@ -25,6 +25,8 @@
     "build": "rm -rf ./dist && tsc"
   },
   "dependencies": {
+    "@buf/impaction-ai_ingestion.bufbuild_es": "1.7.0-20230724010212-6e96e3f59731.1",
+    "@buf/impaction-ai_ingestion.connectrpc_es": "1.3.0-20230724010212-6e96e3f59731.1",
     "@bufbuild/protobuf": "^1.7.0",
     "@connectrpc/connect": "^1.3.0",
     "@connectrpc/connect-node": "^1.3.0",

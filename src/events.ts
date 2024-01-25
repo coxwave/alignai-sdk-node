@@ -1,6 +1,6 @@
 import {Timestamp} from '@bufbuild/protobuf'
 import {v4 as uuidv4} from 'uuid';
-import {Event as PBEvent, EventProperties_MessageProperties_Role} from './buf/event_pb';
+import {Event as PBEvent, EventProperties_MessageProperties_Role} from '@buf/impaction-ai_ingestion.bufbuild_es/ingestion/v1alpha/event_pb';
 import {defaultAssistantId} from "./consts";
 
 export interface Event {

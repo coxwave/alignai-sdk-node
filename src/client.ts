@@ -3,7 +3,7 @@ import {createConnectTransport} from "@connectrpc/connect-node";
 import {v4 as uuidv4} from 'uuid';
 import {defaultApiHost} from "./consts";
 import {Event} from "./events";
-import {IngestionService} from "./buf/ingestion_connect";
+import {IngestionService} from "@buf/impaction-ai_ingestion.connectrpc_es/ingestion/v1alpha/ingestion_connect";
 
 export class AlignAI {
     private readonly projectId: string;
