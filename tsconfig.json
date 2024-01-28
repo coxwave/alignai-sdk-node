@@ -4,8 +4,7 @@
     "target": "es2019",
     "declaration": true,
     "outDir": "./dist",
-    "strictNullChecks": true,
-    "allowJs": true
+    "strictNullChecks": true
   },
   "include": [
     "src/**/*"
