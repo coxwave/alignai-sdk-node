@@ -6,7 +6,7 @@
 
 This is the official server-side Node.js SDK for Align AI. This library allows you to easily send your data to Align AI.
 
-Visit the [full documentation](https://docs.impaction.ai/integration/node-sdk) to see the detailed usage.
+Visit the [full documentation](https://docs.tryalign.ai/node-sdk.html) to see the detailed usage.
 
 # Installation
 
