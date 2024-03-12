@@ -1,6 +1,6 @@
 {
   "name": "alignai",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "Server-side Align AI SDK for Node.js",
   "keywords": [
     "align-ai",
@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "build": "rm -rf ./dist && tsc"
+    "build": "rm -rf ./dist && tsc --allowJs"
   },
   "dependencies": {
     "@bufbuild/protobuf": "^1.7.2",

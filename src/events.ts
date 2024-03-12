@@ -1,7 +1,11 @@
 import {Timestamp} from '@bufbuild/protobuf'
 import {v4 as uuidv4} from 'uuid';
-import {Event as PBEvent, EventProperties_MessageProperties_Role} from './buf/event_pb';
+import {
+    Event as PBEvent,
+    EventProperties_MessageProperties_Role
+} from './buf/event_pb';
 import {defaultAssistantId} from "./consts";
+import {CustomProperties, serializeCustomProperties} from "./utils";
 
 export interface Event {
     toPB(): PBEvent;
@@ -12,6 +16,7 @@ export interface OpenSessionEventProps {
     userId: string;
     assistantId?: string;
     sessionTitle?: string;
+    customProperties?: CustomProperties;
 }
 
 export class OpenSessionEvent implements Event {
@@ -31,7 +36,8 @@ export class OpenSessionEvent implements Event {
                         userId: props.userId,
                         assistantId: props.assistantId ?? defaultAssistantId,
                     },
-                }
+                },
+                customProperties: props.customProperties ? serializeCustomProperties(props.customProperties) : undefined,
             }
         });
     }
@@ -46,6 +52,7 @@ export interface CreateMessageEventProps {
     messageIndex: number;
     messageRole: 'user' | 'assistant';
     messageContent: string;
+    customProperties?: CustomProperties;
 }
 
 export class CreateMessageEvent implements Event {
@@ -64,7 +71,8 @@ export class CreateMessageEvent implements Event {
                         messageRole: props.messageRole === 'user' ? EventProperties_MessageProperties_Role.USER : EventProperties_MessageProperties_Role.ASSISTANT,
                         messageContent: props.messageContent,
                     },
-                }
+                },
+                customProperties: props.customProperties ? serializeCustomProperties(props.customProperties) : undefined,
             }
         });
     }
