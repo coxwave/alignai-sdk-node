@@ -116,6 +116,7 @@ export interface IdentifyUserEventProps {
     userIp?: string;
     userCountryCode?: string;
     userCreateTime?: Date;
+    customProperties?: CustomProperties;
 }
 
 export class IdentifyUserEvent implements Event {
@@ -138,7 +139,8 @@ export class IdentifyUserEvent implements Event {
                         } : undefined,
                         userCreateTime: props.userCreateTime ? Timestamp.fromDate(props.userCreateTime) : Timestamp.now(),
                     },
-                }
+                },
+                customProperties: props.customProperties ? serializeCustomProperties(props.customProperties) : undefined,
             }
         });
     }
