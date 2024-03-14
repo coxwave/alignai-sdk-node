@@ -11,7 +11,8 @@ export interface Event {
     toPB(): PBEvent;
 }
 
-export type CustomProperties = Record<string, string>;
+export type CustomPropertyValue = string;
+export type CustomProperties = Record<string, CustomPropertyValue>;
 
 export interface OpenSessionEventProps {
     sessionId: string;
