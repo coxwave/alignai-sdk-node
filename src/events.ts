@@ -5,11 +5,13 @@ import {
     EventProperties_MessageProperties_Role
 } from './buf/event_pb';
 import {defaultAssistantId} from "./consts";
-import {CustomProperties, serializeCustomProperties} from "./utils";
+import {serializeCustomProperties} from "./utils";
 
 export interface Event {
     toPB(): PBEvent;
 }
+
+export type CustomProperties = Record<string, string>;
 
 export interface OpenSessionEventProps {
     sessionId: string;

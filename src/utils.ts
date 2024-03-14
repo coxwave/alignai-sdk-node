@@ -1,6 +1,5 @@
 import {EventProperties_CustomPropertyValue} from "./buf/event_pb";
-
-export type CustomProperties = Record<string, string>;
+import {CustomProperties} from "./events";
 
 export function serializeCustomProperties(props: CustomProperties) {
     return Object.entries(props).reduce((acc, [key, value]) => {
