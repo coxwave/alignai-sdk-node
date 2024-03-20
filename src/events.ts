@@ -1,11 +1,11 @@
-import {Timestamp} from '@bufbuild/protobuf'
+import {Timestamp} from '@bufbuild/protobuf';
 import {v4 as uuidv4} from 'uuid';
 import {
     Event as PBEvent,
     EventProperties_MessageProperties_Role
 } from './buf/event_pb';
 import {defaultAssistantId} from "./consts";
-import {serializeCustomProperties} from "./utils";
+import {serializeCustomProperties, validateCustomPropertiesOrThrow, validateSessionIdOrThrow, validateUserIdOrThrow} from "./utils";
 
 export interface Event {
     toPB(): PBEvent;
@@ -25,6 +25,15 @@ export interface OpenSessionEventProps {
 export class OpenSessionEvent implements Event {
     private readonly event: PBEvent;
     constructor(props: OpenSessionEventProps) {
+        validateSessionIdOrThrow(props.sessionId);
+        validateUserIdOrThrow(props.userId);
+        if (props.assistantId && props.assistantId.length > 64) {
+            throw new Error('assistantId must be at most 64 characters');
+        }
+        if (props.customProperties) {
+            validateCustomPropertiesOrThrow(props.customProperties);
+        }
+
         this.event = new PBEvent({
             id: uuidv4(),
             type: 'session_open',
@@ -61,6 +70,18 @@ export interface CreateMessageEventProps {
 export class CreateMessageEvent implements Event {
     private readonly event: PBEvent;
     constructor(props: CreateMessageEventProps) {
+        validateSessionIdOrThrow(props.sessionId);
+        if (props.messageIndex <= 0) {
+            throw new Error('messageIndex must be greater than 0');
+        }
+        if (props.messageContent === '') {
+            throw new Error('messageContent is required');
+        }
+        if (props.customProperties) {
+            validateCustomPropertiesOrThrow(props.customProperties);
+        }
+        
+
         this.event = new PBEvent({
             id: uuidv4(),
             type: 'message_create',
@@ -92,6 +113,8 @@ export interface CloseSessionEventProps {
 export class CloseSessionEvent implements Event {
     private readonly event: PBEvent;
     constructor(props: CloseSessionEventProps) {
+        validateSessionIdOrThrow(props.sessionId);
+
         this.event = new PBEvent({
             id: uuidv4(),
             type: 'session_close',
@@ -125,6 +148,20 @@ export interface IdentifyUserEventProps {
 export class IdentifyUserEvent implements Event {
     private readonly event: PBEvent;
     constructor(props: IdentifyUserEventProps) {
+        validateUserIdOrThrow(props.userId);
+        if (props.userDisplayName && props.userDisplayName.length > 64) {
+            throw new Error('userDisplayName must be at most 64 characters');
+        }
+        if (props.userEmail && props.userEmail.length > 256) {
+            throw new Error('userEmail must be at most 256 characters');
+        }
+        if (props.userCountryCode && props.userCountryCode.length !== 2) {
+            throw new Error('userCountryCode must be ISO Alpha-2 code');
+        }
+        if (props.customProperties) {
+            validateCustomPropertiesOrThrow(props.customProperties);
+        }
+
         this.event = new PBEvent({
             id: uuidv4(),
             type: 'user_recognize',
