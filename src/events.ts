@@ -5,7 +5,13 @@ import {
     EventProperties_MessageProperties_Role
 } from './buf/event_pb';
 import {defaultAssistantId} from "./consts";
-import {serializeCustomProperties, validateCustomPropertiesOrThrow, validateSessionIdOrThrow, validateUserIdOrThrow} from "./utils";
+import {serializeCustomProperties} from "./utils";
+import {
+    validateCustomPropertiesOrThrow,
+    validateSessionIdOrThrow,
+    validateUserIdOrThrow,
+    ValidationError
+} from "./validate";
 
 export interface Event {
     toPB(): PBEvent;
@@ -28,7 +34,7 @@ export class OpenSessionEvent implements Event {
         validateSessionIdOrThrow(props.sessionId);
         validateUserIdOrThrow(props.userId);
         if (props.assistantId && props.assistantId.length > 64) {
-            throw new Error('assistantId must be at most 64 characters');
+            throw new ValidationError('assistantId must be at most 64 characters');
         }
         if (props.customProperties) {
             validateCustomPropertiesOrThrow(props.customProperties);
@@ -72,10 +78,10 @@ export class CreateMessageEvent implements Event {
     constructor(props: CreateMessageEventProps) {
         validateSessionIdOrThrow(props.sessionId);
         if (props.messageIndex <= 0) {
-            throw new Error('messageIndex must be greater than 0');
+            throw new ValidationError('messageIndex must be greater than 0');
         }
         if (props.messageContent === '') {
-            throw new Error('messageContent is required');
+            throw new ValidationError('messageContent is required');
         }
         if (props.customProperties) {
             validateCustomPropertiesOrThrow(props.customProperties);
@@ -150,13 +156,13 @@ export class IdentifyUserEvent implements Event {
     constructor(props: IdentifyUserEventProps) {
         validateUserIdOrThrow(props.userId);
         if (props.userDisplayName && props.userDisplayName.length > 64) {
-            throw new Error('userDisplayName must be at most 64 characters');
+            throw new ValidationError('userDisplayName must be at most 64 characters');
         }
         if (props.userEmail && props.userEmail.length > 256) {
-            throw new Error('userEmail must be at most 256 characters');
+            throw new ValidationError('userEmail must be at most 256 characters');
         }
         if (props.userCountryCode && props.userCountryCode.length !== 2) {
-            throw new Error('userCountryCode must be ISO Alpha-2 code');
+            throw new ValidationError('userCountryCode must be ISO Alpha-2 code');
         }
         if (props.customProperties) {
             validateCustomPropertiesOrThrow(props.customProperties);
