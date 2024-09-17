@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "build": "rm -rf ./dist && tsc"
+    "build": "rm -rf ./dist && tsc --allowJs"
   },
   "dependencies": {
     "@bufbuild/protobuf": "^1.10.0",
