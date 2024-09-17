@@ -195,3 +195,14 @@ export class IdentifyUserEvent implements Event {
         return this.event;
     }
 }
+
+export interface CreateMessageFeedbackEventProps {
+    sessionId: string;
+    messageIndex: number;
+    feedbackType: 'thumbs_up' | 'thumbs_down';
+}
+
+export interface CreateSessionFeedbackEventProps {
+    sessionId: string;
+    feedbackType: 'thumbs_up' | 'thumbs_down';
+}
