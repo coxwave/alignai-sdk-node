@@ -1,6 +1,6 @@
 {
   "name": "alignai",
-  "version": "0.2.0",
+  "version": "0.1.6",
   "description": "Server-side Align AI SDK for Node.js",
   "keywords": [
     "align-ai",
@@ -22,21 +22,21 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "build": "rm -rf ./dist && tsc --allowJs"
+    "build": "rm -rf ./dist && tsc"
   },
   "dependencies": {
-    "@bufbuild/protobuf": "^1.7.2",
-    "@connectrpc/connect": "^1.4.0",
-    "@connectrpc/connect-node": "^1.4.0",
-    "uuid": "^9.0.1"
+    "@bufbuild/protobuf": "^1.10.0",
+    "@connectrpc/connect": "^1.5.0",
+    "@connectrpc/connect-node": "^1.5.0",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "@types/node": "^20.11.17",
-    "@types/uuid": "^9.0.8",
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@typescript-eslint/parser": "^6.21.0",
-    "eslint": "^8.56.0",
+    "@types/node": "^22.5.5",
+    "@types/uuid": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.6.0",
+    "@typescript-eslint/parser": "^8.6.0",
+    "eslint": "^9.10.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.6.2"
   }
 }
