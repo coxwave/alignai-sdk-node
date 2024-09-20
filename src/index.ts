@@ -9,4 +9,8 @@ export {
     CloseSessionEvent,
     IdentifyUserEventProps,
     IdentifyUserEvent,
+    CreateMessageFeedbackEventProps,
+    CreateMessageFeedbackEvent,
+    CreateSessionFeedbackEventProps,
+    CreateSessionFeedbackEvent,
 } from './events';

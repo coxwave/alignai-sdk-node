@@ -1,7 +1,7 @@
 import {Timestamp} from '@bufbuild/protobuf';
 import {v4 as uuidv4} from 'uuid';
 import {
-    Event as PBEvent,
+    Event as PBEvent, EventProperties_FeedbackProperties_Target,
     EventProperties_MessageProperties_Role
 } from './buf/event_pb';
 import {defaultAssistantId} from "./consts";
@@ -187,6 +187,75 @@ export class IdentifyUserEvent implements Event {
                     },
                 },
                 customProperties: props.customProperties ? serializeCustomProperties(props.customProperties) : undefined,
+            }
+        });
+    }
+
+    toPB(): PBEvent {
+        return this.event;
+    }
+}
+
+export interface CreateMessageFeedbackEventProps {
+    sessionId: string;
+    messageIndex: number;
+    feedbackType: 'thumbs_up' | 'thumbs_down';
+}
+
+export class CreateMessageFeedbackEvent implements Event {
+    private readonly event: PBEvent;
+    constructor(props: CreateMessageFeedbackEventProps) {
+        validateSessionIdOrThrow(props.sessionId);
+        if (props.messageIndex <= 0) {
+            throw new ValidationError('messageIndex must be greater than 0');
+        }
+
+        this.event = new PBEvent({
+            id: uuidv4(),
+            type: 'feedback_create',
+            createTime: Timestamp.now(),
+            properties: {
+                reservedProperties: {
+                    case: 'feedbackProperties',
+                    value: {
+                        sessionId: props.sessionId,
+                        messageIndexHint: props.messageIndex,
+                        feedbackTarget: EventProperties_FeedbackProperties_Target.MESSAGE,
+                        type: props.feedbackType,
+                    },
+                },
+            }
+        });
+    }
+
+    toPB(): PBEvent {
+        return this.event;
+    }
+}
+
+export interface CreateSessionFeedbackEventProps {
+    sessionId: string;
+    feedbackType: 'thumbs_up' | 'thumbs_down';
+}
+
+export class CreateSessionFeedbackEvent implements Event {
+    private readonly event: PBEvent;
+    constructor(props: CreateSessionFeedbackEventProps) {
+        validateSessionIdOrThrow(props.sessionId);
+
+        this.event = new PBEvent({
+            id: uuidv4(),
+            type: 'feedback_create',
+            createTime: Timestamp.now(),
+            properties: {
+                reservedProperties: {
+                    case: 'feedbackProperties',
+                    value: {
+                        sessionId: props.sessionId,
+                        feedbackTarget: EventProperties_FeedbackProperties_Target.SESSION,
+                        type: props.feedbackType,
+                    },
+                },
             }
         });
     }
